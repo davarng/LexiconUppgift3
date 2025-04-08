@@ -36,7 +36,7 @@ namespace LexiconUppgift3.Vehicles
             Console.Write("Write weight: ");
             double weight = double.Parse(Console.ReadLine());
 
-            Vehicle vehicle = new Vehicle(brand, model, year, weight);
+            var vehicle = new Car(brand, model, year, weight);
             return vehicle;
         }
     }

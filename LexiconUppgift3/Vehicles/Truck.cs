@@ -8,6 +8,21 @@ namespace LexiconUppgift3.Vehicles
 {
     class Truck : Vehicle, ICleanable
     {
+        private int numberOfWheels;
+
+        public int NumberOfWheels         
+        {
+            get { return numberOfWheels; }
+            set
+            {
+                if (value < 3 || value > 30)
+                {
+                    throw new ArgumentException("too many or few wheels"
+                        , nameof(value));
+                }
+                numberOfWheels = value;
+            }
+        }
         public Truck(string brand, string model, int year, double weight) : base(brand, model, year, weight)
         {
         }

@@ -10,7 +10,7 @@ namespace LexiconUppgift3.Vehicles
     {
         private int watt;
 
-        public int Watt         //1886-current year
+        public int Watt
         {
             get { return watt; }
             set

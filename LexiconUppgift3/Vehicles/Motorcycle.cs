@@ -8,6 +8,21 @@ namespace LexiconUppgift3.Vehicles
 {
     class Motorcycle : Vehicle
     {
+        private int wheelieCount;
+
+        public int WheelieCount        
+        {
+            get { return wheelieCount; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("No negative wheelies"
+                        , nameof(value));
+                }
+                wheelieCount = value;
+            }
+        }
 
         public Motorcycle(string brand, string model, int year, double weight) : base(brand, model, year, weight)
         {

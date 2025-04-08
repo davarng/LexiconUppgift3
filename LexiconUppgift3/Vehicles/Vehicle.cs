@@ -81,8 +81,8 @@ abstract class Vehicle
 
     public string Stats()
     {
-
-        return "";
+        string vehiclestats = $"{Brand} {Model} {Year} {Weight}";
+        return vehiclestats;
     }
 
 }
