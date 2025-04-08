@@ -1,11 +1,24 @@
 ﻿using LexiconUppgift3.ErrorFolder;
+using LexiconUppgift3.Vehicles;
 
 namespace LexiconUppgift3;
 
 internal class Program
 {
+    //Frågor
+    //1. Det går ej. Man får ett kompilatorfel som säger "Argument 1: cannot convert from 'LexiconUppgift3.Vehicles.Car' to 'LexiconUppgift3.Vehicles.Motorcycle'"
+    //2. Den borde vara av typen vehicle. List<Vehicle>
+    //3. 
     static void Main(string[] args)
     {
+        List<Vehicle> list = new List<Vehicle>();
+        Car car = new Car("toyota","yaris",1998,1400.0);
+        Truck truck = new Truck("toyota", "pickup", 1988, 3000.0);
+        list.Add(car);
+        list.Add(truck);
+        list[0].Clean();
+
+
         List<Vehicle> vehicleList = new List<Vehicle>();
         while (true) 
         {

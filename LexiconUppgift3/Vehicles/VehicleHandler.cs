@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LexiconUppgift3
+namespace LexiconUppgift3.Vehicles
 {
     static class VehicleHandler
     {
