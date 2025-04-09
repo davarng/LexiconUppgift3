@@ -42,7 +42,6 @@ internal class Program
                     }
 
                     break;
-
                 case "2":
                     VehicleHandler.PrintList(vehicleList);
                     
@@ -60,7 +59,12 @@ internal class Program
 
                     break;
                 case "Q":
+
                     return;
+                default:
+                    Console.WriteLine("You did not choose one of the options, please try again");
+
+                    break;
             }
         }
     }
