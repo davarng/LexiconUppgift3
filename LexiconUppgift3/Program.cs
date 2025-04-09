@@ -3,28 +3,19 @@ using LexiconUppgift3.Vehicles;
 
 namespace LexiconUppgift3;
 
+//Frågor
+//1. Det går ej. Man får ett kompilatorfel som säger "Argument 1: cannot convert from 'LexiconUppgift3.Vehicles.Car' to 'LexiconUppgift3.Vehicles.Motorcycle'"
+//2. Den borde vara av typen vehicle. List<Vehicle>
+//3. Om du gör en check på att fordonet på den indexplatsen du är på är av typen ICleanable så går det. Annars klagar kompilatorn på att Clean() inte finns i Vehicleklassen.
+//4. Truck och Car som jag har implementerat ICleanable på ärver redan från Vehicle. I C# så kan klasser ej ärva från flera klasser.
+//Därför kan man använda interfaces för att hjälpa dela egenskaper hos klasser som redan ärver.
+
 internal class Program
 {
-    //Frågor
-    //1. Det går ej. Man får ett kompilatorfel som säger "Argument 1: cannot convert from 'LexiconUppgift3.Vehicles.Car' to 'LexiconUppgift3.Vehicles.Motorcycle'"
-    //2. Den borde vara av typen vehicle. List<Vehicle>
-    //3. Om du gör en check på att fordonet på den indexplatsen du är på är av typen ICleanable så går det. Annars klagar kompilatorn på att Clean() inte finns i Vehicleklassen.
-    //4. Truck och Car som jag har implementerat ICleanable på ärver redan från Vehicle. I C# så kan klasser ej ärva från flera klasser.
-    //Därför kan man använda interfaces för att hjälpa dela egenskaper hos klasser som redan ärver.
     static void Main(string[] args)
     {
         List<Vehicle> vehicleList = new List<Vehicle>();
-        Vehicle truck = new Truck("123","123",2000,1230,20);
-
-        vehicleList.Add(truck);
-        foreach (Vehicle vehicle in vehicleList) 
-        {
-            if (vehicle is ICleanable cleanable)
-                cleanable.Clean();
-            else
-                Console.WriteLine("Can't clean sorry");
-        }
-
+       
         while (true) 
         {
             Console.WriteLine(
@@ -40,10 +31,9 @@ internal class Program
             switch (input)
             {
                 case "1":
-
                     try
                     {
-                        //vehicleList.Add(VehicleHandler.CreateVehicle());
+                        vehicleList.Add(VehicleHandler.CreateVehicle());
                     }
                     catch (Exception e)
                     {
@@ -62,33 +52,16 @@ internal class Program
 
                     break;
                 case "4":
-                    
-                    EngineFailureError engineFailureError = new EngineFailureError();
-                    TransmissionFailureError transmissionFailureError = new TransmissionFailureError();
-                    BrakeFailureError brakeFailureError = new BrakeFailureError();
-                    List<SystemError> errorList = [brakeFailureError,transmissionFailureError,engineFailureError];
+                    SystemError.PrintAllErrors();
 
-                    foreach (var error in errorList)
-                    {
-                        Console.WriteLine(error.ErrorMessage());
-                    }
                     break;
                 case "5":
-                    foreach (Vehicle vehicle in vehicleList)
-                    {
-                        vehicle.Stats();
-                        vehicle.StartEngine();
-                        if (vehicle is ICleanable cleanable)
-                            cleanable.Clean();
-                        Console.WriteLine("-------------------");
-                    }
+                    VehicleHandler.RunDiagnostics(vehicleList);
 
                     break;
                 case "Q":
                     return;
             }
-            
         }
-        
     }
 }
