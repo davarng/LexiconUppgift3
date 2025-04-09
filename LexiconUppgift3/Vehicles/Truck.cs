@@ -17,19 +17,20 @@ namespace LexiconUppgift3.Vehicles
             {
                 if (value < 3 || value > 30)
                 {
-                    throw new ArgumentException("too many or few wheels"
+                    throw new ArgumentException("Number of wheels has to be greater than 3 but less than 30"
                         , nameof(value));
                 }
                 numberOfWheels = value;
             }
         }
-        public Truck(string brand, string model, int year, double weight) : base(brand, model, year, weight)
+        public Truck(string brand, string model, int year, double weight, int numberOfWheels) : base(brand, model, year, weight)
         {
+            NumberOfWheels = numberOfWheels;
         }
 
         public void Clean()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Cleaning truck.");
         }
 
         public override void StartEngine()

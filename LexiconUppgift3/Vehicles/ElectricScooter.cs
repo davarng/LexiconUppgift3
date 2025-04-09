@@ -17,15 +17,16 @@ namespace LexiconUppgift3.Vehicles
             {
                 if (value < 100 || value > 30000 )
                 {
-                    throw new ArgumentException("slow or fast"
+                    throw new ArgumentException("Watt has to be between 100 and 30000"
                         , nameof(value));
                 }
                 watt = value;
             }
         }
 
-        public ElectricScooter(string brand, string model, int year, double weight) : base(brand, model, year, weight)
+        public ElectricScooter(string brand, string model, int year, double weight, int watt) : base(brand, model, year, weight)
         {
+            Watt = watt;
         }
 
         public override void StartEngine()

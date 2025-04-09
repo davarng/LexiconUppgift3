@@ -79,7 +79,7 @@ abstract class Vehicle
 
     abstract public void StartEngine();
 
-    public string Stats()
+    virtual public string Stats()
     {
         string vehiclestats = $"{Brand} {Model} {Year} {Weight}";
         return vehiclestats;

@@ -17,15 +17,16 @@ namespace LexiconUppgift3.Vehicles
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("No negative wheelies"
+                    throw new ArgumentException("Number of wheelies has to be greater than 0"
                         , nameof(value));
                 }
                 wheelieCount = value;
             }
         }
 
-        public Motorcycle(string brand, string model, int year, double weight) : base(brand, model, year, weight)
+        public Motorcycle(string brand, string model, int year, double weight, int wheelieCount) : base(brand, model, year, weight)
         {
+            WheelieCount = wheelieCount;
         }
 
         public override void StartEngine()

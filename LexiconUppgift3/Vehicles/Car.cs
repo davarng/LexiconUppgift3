@@ -18,8 +18,9 @@ namespace LexiconUppgift3.Vehicles
                 spareTire = value;
             }
         }
-        public Car(string brand, string model, int year, double weight) : base(brand, model, year, weight)
+        public Car(string brand, string model, int year, double weight, bool spareTire) : base(brand, model, year, weight)
         {
+            SpareTire = spareTire;
         }
 
         public override void StartEngine()
