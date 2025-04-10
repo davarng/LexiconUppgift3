@@ -48,7 +48,6 @@ namespace LexiconUppgift3.Vehicles
             Console.Write("Write number of vehicle: ");
             int carChoice = int.Parse(Console.ReadLine());
 
-            // VEHICLE 4
             Console.Clear();
             Vehicle vehicle = vehicleList[carChoice - 1]; 
             vehicle.Stats();
@@ -56,21 +55,42 @@ namespace LexiconUppgift3.Vehicles
             string model = "123";
             int year = 1998;
             double weight = 1999.2;
+            string answer;
 
             string vehicleType = vehicle.GetType().Name;
-            switch(vehicleType){
-                case "Car":
-                    vehicle.Brand = "1738";
-                    break;
-                case "ElectricScooter":
+            switch (vehicleType)
+            {
+                case "1":
+                    Console.WriteLine("Spare tire(Y/N): ");
+                    answer = Console.ReadLine().ToUpper();
+                    if (answer == "Y")
+                        vehicle = new Car(brand, model, year, weight, true);
+                    else if (answer == "N")
+                        vehicle = new Car(brand, model, year, weight, false);
 
                     break;
-                case "Motorcycle":
+                case "2":
+                    Console.WriteLine("Write number of Watts: ");
+                    answer = Console.ReadLine().ToUpper();
+                    vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
 
                     break;
-                case "Truck":
+                case "3":
+                    Console.WriteLine("Write number of wheelies: ");
+                    answer = Console.ReadLine().ToUpper();
+                    vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
 
                     break;
+                case "4":
+                    Console.WriteLine("Write number of wheels: ");
+                    answer = Console.ReadLine().ToUpper();
+                    vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
+
+                    break;
+
+                default:
+                    throw new ArgumentException("No vehicle with that type exists");
+
             }
 
             return vehicleList;
