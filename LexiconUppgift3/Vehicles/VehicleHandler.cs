@@ -9,24 +9,16 @@ namespace LexiconUppgift3.Vehicles
 {
     static class VehicleHandler
     {
-        public static void ChangeVehicle(List<Vehicle> vehicleList)
-        {
-            PrintList(vehicleList);
-            Console.Write("Write number of car: ");
-            int carChoice = int.Parse(Console.ReadLine());
-
-        }
-
         public static void PrintList(List<Vehicle> vehicleList)
         {
             if (vehicleList.Any())
             {
+                int i = 1;
                 foreach (Vehicle vehicle in vehicleList)
                 {
-                    Console.WriteLine($"{vehicle.Brand} {vehicle.Model}{Environment.NewLine}" +
-                        $"Year: {vehicle.Year}{Environment.NewLine}" +
-                        $"Weight: {vehicle.Weight}{Environment.NewLine}" +
-                        $"--------------------------------------");
+                    Console.WriteLine($"Vehicle #{i}");
+                    vehicle.Stats();
+                    i++;
                 }
             }
             else
@@ -48,6 +40,40 @@ namespace LexiconUppgift3.Vehicles
             }
             else
                 Console.WriteLine("No Cars exist to run diagnostics on.");
+        }
+
+        public static List<Vehicle> ChangeVehicle(List<Vehicle> vehicleList)
+        {
+            PrintList(vehicleList);
+            Console.Write("Write number of vehicle: ");
+            int carChoice = int.Parse(Console.ReadLine());
+
+            // VEHICLE 4
+            Console.Clear();
+            Vehicle vehicle = vehicleList[carChoice - 1]; 
+            vehicle.Stats();
+            string brand = "123";
+            string model = "123";
+            int year = 1998;
+            double weight = 1999.2;
+
+            string vehicleType = vehicle.GetType().Name;
+            switch(vehicleType){
+                case "Car":
+                    vehicle.Brand = "1738";
+                    break;
+                case "ElectricScooter":
+
+                    break;
+                case "Motorcycle":
+
+                    break;
+                case "Truck":
+
+                    break;
+            }
+
+            return vehicleList;
         }
 
         public static Vehicle CreateVehicle()
@@ -112,6 +138,12 @@ namespace LexiconUppgift3.Vehicles
                 $"3. Motorcycle{Environment.NewLine}" +
                 $"4. Truck");
             string answer = Console.ReadLine();
+
+            if (!new[] { "1", "2", "3", "4" }.Contains(answer))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new ArgumentException("This type of vehicle does not exist"); 
+            }
 
             return answer;
         }

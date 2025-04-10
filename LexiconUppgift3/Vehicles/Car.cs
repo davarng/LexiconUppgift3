@@ -30,7 +30,13 @@ namespace LexiconUppgift3.Vehicles
 
         public void Clean()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cleaning car.{Environment.NewLine}");
+        }
+
+        public override void Stats()
+        {
+            base.Stats();
+            Console.WriteLine($"Spare tire: {(SpareTire ? "Yes":"No")}{Environment.NewLine}");
         }
     }
 }

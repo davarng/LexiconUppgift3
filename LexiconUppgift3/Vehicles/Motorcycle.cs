@@ -33,5 +33,11 @@ namespace LexiconUppgift3.Vehicles
         {
             Console.WriteLine("EHEHEHEHEHEHE Blublublublublublublublublu...");
         }
+
+        public override void Stats()
+        {
+            base.Stats();
+            Console.WriteLine($"Wheelie count: {WheelieCount}{Environment.NewLine}");
+        }
     }
 }

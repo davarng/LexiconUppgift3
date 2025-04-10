@@ -18,6 +18,7 @@ internal class Program
        
         while (true) 
         {
+            Console.ResetColor();
             Console.WriteLine(
                 $"1. Create vehicle{Environment.NewLine}" +
                 $"2. Print all vehicles{Environment.NewLine}" +

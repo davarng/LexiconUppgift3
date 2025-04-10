@@ -77,12 +77,13 @@ abstract class Vehicle
         }
     }
 
-    abstract public void StartEngine();
+    public abstract void StartEngine();
 
-    virtual public string Stats()
+    public virtual void Stats()
     {
-        string vehiclestats = $"{Brand} {Model} {Year} {Weight}";
-        return vehiclestats;
+        string vehiclestats = $"Brand: {Brand}{Environment.NewLine}Model: {Model}" +
+            $"{Environment.NewLine}Year: {Year}{Environment.NewLine}Weight: {Weight}";
+        Console.WriteLine(vehiclestats);
     }
 
 }
