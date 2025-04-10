@@ -42,111 +42,116 @@ namespace LexiconUppgift3.Vehicles
                 Console.WriteLine("No Cars exist to run diagnostics on.");
         }
 
-        public static List<Vehicle> ChangeVehicle(List<Vehicle> vehicleList)
+        public static void ChangeVehicle(List<Vehicle> vehicleList)
         {
             PrintList(vehicleList);
             Console.Write("Write number of vehicle: ");
             int carChoice = int.Parse(Console.ReadLine());
-
+            
+            Vehicle vehicle = vehicleList[carChoice - 1];
             Console.Clear();
-            Vehicle vehicle = vehicleList[carChoice - 1]; 
             vehicle.Stats();
-            string brand = "123";
-            string model = "123";
-            int year = 1998;
-            double weight = 1999.2;
-            string answer;
-
+            
             string vehicleType = vehicle.GetType().Name;
-            switch (vehicleType)
-            {
-                case "1":
-                    Console.WriteLine("Spare tire(Y/N): ");
-                    answer = Console.ReadLine().ToUpper();
-                    if (answer == "Y")
-                        vehicle = new Car(brand, model, year, weight, true);
-                    else if (answer == "N")
-                        vehicle = new Car(brand, model, year, weight, false);
 
-                    break;
-                case "2":
-                    Console.WriteLine("Write number of Watts: ");
-                    answer = Console.ReadLine().ToUpper();
-                    vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
-
-                    break;
-                case "3":
-                    Console.WriteLine("Write number of wheelies: ");
-                    answer = Console.ReadLine().ToUpper();
-                    vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
-
-                    break;
-                case "4":
-                    Console.WriteLine("Write number of wheels: ");
-                    answer = Console.ReadLine().ToUpper();
-                    vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
-
-                    break;
-
-                default:
-                    throw new ArgumentException("No vehicle with that type exists");
-
-            }
-
-            return vehicleList;
+            Console.WriteLine("Just hit enter if you do not wish to edit field.");
+            vehicle = AssignVehicleProperties(vehicleType, vehicle);
         }
 
         public static Vehicle CreateVehicle()
         {
             string vehicleType = AskForVehicleType();
             Vehicle vehicle = null;
-            string answer;
 
+            AssignVehicleProperties(vehicleType, vehicle);
+
+            return vehicle;
+        }
+
+        private static Vehicle AssignVehicleProperties(string vehicleType,Vehicle vehicle)
+        {
             Console.Write("Write brand name: ");
             string brand = Console.ReadLine();
             Console.Write("Write model name: ");
             string model = Console.ReadLine();
-            Console.Write("Write year: ");
-            int year = int.Parse(Console.ReadLine());
-            Console.Write("Write weight: ");
-            double weight = double.Parse(Console.ReadLine());
-
             
+            Console.Write("Write year: ");
+            string yearString = Console.ReadLine();
+            bool yearExists = int.TryParse(yearString,out int year);
+            
+            Console.Write("Write weight: ");
+            string weightString = Console.ReadLine();
+            bool weightExists = double.TryParse(weightString, out double weight);
+            
+            if(vehicle != null)
+            {
+                if (brand == "")
+                    brand = vehicle.Brand;
+                if (model == "")
+                    model = vehicle.Model;
+                if (yearString == "")
+                    year = vehicle.Year;
+                if (weightString == "")
+                    weight = vehicle.Weight;               
+            }
+
+            string answer;
+
             switch (vehicleType)
             {
-                case "1":
+                case "Car":
                     Console.WriteLine("Spare tire(Y/N): ");
                     answer = Console.ReadLine().ToUpper();
+                    
                     if (answer == "Y")
                         vehicle = new Car(brand, model, year, weight, true);
                     else if (answer == "N")
                         vehicle = new Car(brand, model, year, weight, false);
+                    else if (answer == "" && vehicle.GetType().Name == "Car")
+                    {
+                        vehicle = new Car(brand, model, year, weight, (vehicle as Car).SpareTire);
+                    }
 
-                    break;
-                case "2":
+                        break;
+                case "ElectricScooter":
                     Console.WriteLine("Write number of Watts: ");
                     answer = Console.ReadLine().ToUpper();
                     vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
+                    
+                    if (answer == "" && vehicle.GetType().Name == "ElectricScooter")
+                    {
+                        vehicle = new ElectricScooter(brand, model, year, weight, (vehicle as ElectricScooter).Watt);
+                    }
 
                     break;
-                case "3":
+                case "Motorcycle":
                     Console.WriteLine("Write number of wheelies: ");
                     answer = Console.ReadLine().ToUpper();
                     vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
+                    
+                    if (answer == "" && vehicle.GetType().Name == "Motorcycle")
+                    {
+                        vehicle = new Motorcycle(brand, model, year, weight, (vehicle as Motorcycle).WheelieCount);
+                    }
 
                     break;
-                case "4":
+                case "Truck":
                     Console.WriteLine("Write number of wheels: ");
                     answer = Console.ReadLine().ToUpper();
                     vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
+
+                    if (answer == "" && vehicle.GetType().Name == "Truck")
+                    {
+                        vehicle = new Truck(brand, model, year, weight, (vehicle as Truck).NumberOfWheels);
+                    }
 
                     break;
 
                 default:
                     throw new ArgumentException("No vehicle with that type exists");
 
+                
             }
-         
             return vehicle;
         }
 
@@ -157,13 +162,15 @@ namespace LexiconUppgift3.Vehicles
                 $"2. Electric scooter{Environment.NewLine}" +
                 $"3. Motorcycle{Environment.NewLine}" +
                 $"4. Truck");
-            string answer = Console.ReadLine();
 
-            if (!new[] { "1", "2", "3", "4" }.Contains(answer))
+            string answer = Console.ReadLine() switch 
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                throw new ArgumentException("This type of vehicle does not exist"); 
-            }
+                 "1" => "Car",
+                 "2" => "ElectricScooter",
+                 "3" => "Motorcycle",
+                 "4" => "Truck",
+                 _ => "NoType" 
+            };
 
             return answer;
         }

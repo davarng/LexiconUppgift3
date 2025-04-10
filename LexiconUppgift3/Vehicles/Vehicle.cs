@@ -40,7 +40,7 @@ abstract class Vehicle
         get { return weight; }
         set
         {
-            if (value < 0.0)
+            if (value <= 4.0)
             {
                 throw new ArgumentException("Weight is less than 0???????"
                     , nameof(value));
