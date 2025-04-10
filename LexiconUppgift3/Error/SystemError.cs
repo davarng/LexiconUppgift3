@@ -16,6 +16,8 @@ namespace LexiconUppgift3.ErrorFolder
             BrakeFailureError brakeFailureError = new BrakeFailureError();
             List<SystemError> errorList = [brakeFailureError, transmissionFailureError, engineFailureError];
 
+            Console.ForegroundColor = ConsoleColor.Red;
+
             foreach (var error in errorList)
             {
                 Console.WriteLine(error.ErrorMessage());

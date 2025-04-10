@@ -30,7 +30,7 @@ namespace LexiconUppgift3.Vehicles
 
         public void Clean()
         {
-            Console.WriteLine("Cleaning car.");
+            Console.WriteLine("Cleaning Truck.");
         }
 
         public override void StartEngine()
@@ -41,7 +41,7 @@ namespace LexiconUppgift3.Vehicles
         public override void Stats()
         {
             base.Stats();
-            Console.WriteLine($"Number of wheels: {NumberOfWheels}{Environment.NewLine}");
+            Console.WriteLine($"Number of wheels: {NumberOfWheels}");
         }
     }
 }

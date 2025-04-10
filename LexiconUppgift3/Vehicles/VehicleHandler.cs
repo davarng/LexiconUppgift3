@@ -22,7 +22,7 @@ namespace LexiconUppgift3.Vehicles
                 }
             }
             else
-                Console.WriteLine("No cars exist at this moment.");
+                Console.WriteLine("No vehicles exist at this moment.");
         }
 
         public static void RunDiagnostics(List<Vehicle> vehicleList)
@@ -62,6 +62,7 @@ namespace LexiconUppgift3.Vehicles
         {
             string vehicleType = AskForVehicleType();
             Vehicle vehicle = null;
+            Console.Clear();
 
             return AssignVehicleProperties(vehicleType, vehicle);
         }
@@ -77,7 +78,7 @@ namespace LexiconUppgift3.Vehicles
             string yearString = Console.ReadLine();
             bool yearExists = int.TryParse(yearString, out int year);
 
-            Console.Write("Write weight: ");
+            Console.Write("Write weight(kg): ");
             string weightString = Console.ReadLine();
             bool weightExists = double.TryParse(weightString, out double weight);
 
@@ -98,7 +99,7 @@ namespace LexiconUppgift3.Vehicles
             switch (vehicleType)
             {
                 case "Car":
-                    Console.WriteLine("Spare tire(Y/N): ");
+                    Console.Write("Spare tire(Y/N): ");
                     answer = Console.ReadLine().ToUpper();
 
                     if (answer == "Y")
@@ -106,13 +107,13 @@ namespace LexiconUppgift3.Vehicles
                     else if (answer == "N")
                         vehicle = new Car(brand, model, year, weight, false);
                     else if (answer == "" && vehicle != null)
-                    {
                         vehicle = new Car(brand, model, year, weight, (vehicle as Car).SpareTire);
-                    }
+                    else
+                        throw new ArgumentException("Spare tire value must be either Y or N");
 
                     break;
                 case "ElectricScooter":
-                    Console.WriteLine("Write number of Watts: ");
+                    Console.Write("Write number of Watts: ");
                     answer = Console.ReadLine();
 
                     if (answer == "" && vehicle != null)
@@ -122,7 +123,7 @@ namespace LexiconUppgift3.Vehicles
 
                     break;
                 case "Motorcycle":
-                    Console.WriteLine("Write number of wheelies: ");
+                    Console.Write("Write number of wheelies: ");
                     answer = Console.ReadLine();
 
                     if (answer == "" && vehicle != null)
@@ -132,7 +133,7 @@ namespace LexiconUppgift3.Vehicles
 
                     break;
                 case "Truck":
-                    Console.WriteLine("Write number of wheels: ");
+                    Console.Write("Write number of wheels: ");
                     answer = Console.ReadLine();
 
                     if (answer == "" && vehicle != null)
@@ -144,11 +145,8 @@ namespace LexiconUppgift3.Vehicles
                 default:
                     throw new NullReferenceException("Something went wrong while creating your vehicle, please try again.");
             }
-
-            if (vehicle != null)
-                return vehicle;
-            else
-                throw new ArgumentException("The input you gave is not valid");
+                
+            return vehicle;
         }
 
         private static string AskForVehicleType()
@@ -159,13 +157,13 @@ namespace LexiconUppgift3.Vehicles
                 $"3. Motorcycle{Environment.NewLine}" +
                 $"4. Truck");
 
-            string answer = Console.ReadLine() switch 
+            string answer = Console.ReadLine() switch
             {
-                 "1" => "Car",
-                 "2" => "ElectricScooter",
-                 "3" => "Motorcycle",
-                 "4" => "Truck",
-                 _ => "NoType" 
+                "1" => "Car",
+                "2" => "ElectricScooter",
+                "3" => "Motorcycle",
+                "4" => "Truck",
+                _ => throw new ArgumentException("Vehicle type must be a number from 1 to 4, corresponding with the vehicle you want to create.")
             };
 
             return answer;

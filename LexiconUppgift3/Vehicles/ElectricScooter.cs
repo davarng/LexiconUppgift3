@@ -43,7 +43,7 @@ namespace LexiconUppgift3.Vehicles
         public override void Stats()
         {
             base.Stats();
-            Console.WriteLine($"Watts: {Watt}{Environment.NewLine}");
+            Console.WriteLine($"Watts: {Watt}");
         }
     }
 }

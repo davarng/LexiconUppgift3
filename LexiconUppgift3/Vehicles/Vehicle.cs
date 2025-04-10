@@ -42,7 +42,7 @@ abstract class Vehicle
         {
             if (value <= 4.0)
             {
-                throw new ArgumentException("Weight is less than 0???????"
+                throw new ArgumentException("Weight can not be less than 4kg"
                     , nameof(value));
             }
             weight = value;
@@ -56,7 +56,7 @@ abstract class Vehicle
         {
             if (value < 1886 || value > DateTime.Now.Year)
             {
-                throw new ArgumentException("Cars where invented in 1886 and cars can't be from the future"
+                throw new ArgumentException("1886 is too early and vehicles can't be from the future!"
                     , nameof(value));
             }
             year = value;
@@ -82,7 +82,7 @@ abstract class Vehicle
     public virtual void Stats()
     {
         string vehiclestats = $"Brand: {Brand}{Environment.NewLine}Model: {Model}" +
-            $"{Environment.NewLine}Year: {Year}{Environment.NewLine}Weight: {Weight}";
+            $"{Environment.NewLine}Year: {Year}{Environment.NewLine}Weight(kg): {Weight}";
         Console.WriteLine(vehiclestats);
     }
 

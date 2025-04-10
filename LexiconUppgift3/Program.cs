@@ -38,8 +38,9 @@ internal class Program
                     }
                     catch (Exception e)
                     {
-
-                        Console.WriteLine("ERROR " + e);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Clear();
+                        Console.WriteLine("ERROR " + e.Message);
                     }
 
                     break;
@@ -48,7 +49,16 @@ internal class Program
                     
                     break;
                 case "3":
-                    VehicleHandler.ChangeVehicle(vehicleList);
+                    try
+                    {
+                        VehicleHandler.ChangeVehicle(vehicleList);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Clear();
+                        Console.WriteLine("ERROR " + e.Message);
+                    }
 
                     break;
                 case "4":
@@ -67,6 +77,7 @@ internal class Program
 
                     break;
             }
+            Console.WriteLine();
         }
     }
 }
