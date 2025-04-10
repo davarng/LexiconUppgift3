@@ -29,16 +29,20 @@ internal class Program
                 $"Q. Quit application");
 
             string input = Console.ReadLine().ToUpper();
-            Console.Clear();
+            Console.Clear(); //Clearing console to make it more readable.
             switch (input)
             {
                 case "1":
+                    //Try catch to catch exceptions when dealing with user input. This is why i only use it on create and change.
                     try
-                    {
+                    {   
+                        //Lets user create vehicles of different types.
                         vehicleList.Add(VehicleHandler.CreateVehicle());
                     }
                     catch (Exception e)
-                    {
+                    {   
+                        //Making Text red for errors and printing the e.message. For regular users this should be enough.
+                        //But if more detailed info is necessary you can return more than just the message.
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Clear();
                         Console.WriteLine("ERROR " + e.Message);
@@ -46,12 +50,14 @@ internal class Program
 
                     break;
                 case "2":
+                    //Prints all the vehicles.
                     VehicleHandler.PrintList(vehicleList);
                     
                     break;
                 case "3":
                     try
                     {
+                        //Lets the user change properties of vehicles.
                         VehicleHandler.ChangeVehicle(vehicleList);
                     }
                     catch(Exception e)
@@ -63,17 +69,20 @@ internal class Program
 
                     break;
                 case "4":
+                    //Printing errors.
                     SystemError.PrintAllErrors();
 
                     break;
                 case "5":
+                    //Prints all vehicle information, starts the vehicle and also attempts to clean the vehicles if they are ICleanable.
                     VehicleHandler.RunDiagnostics(vehicleList);
 
                     break;
                 case "Q":
-
+                    //Turns off the application.
                     return;
                 default:
+                    //If the user didn't give a valid value.
                     Console.WriteLine("You did not choose one of the options, please try again");
 
                     break;

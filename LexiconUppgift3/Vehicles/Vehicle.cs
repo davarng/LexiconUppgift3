@@ -21,26 +21,26 @@ abstract class Vehicle
         Weight = weight;
     }
 
-    public string Brand     //2-20 tecken
+    public string Brand     //Minimum 2 and maximum 20 characters.
     {
         get { return brand; }
         set
         {
             if (value.Length < 2 || value.Length > 20)
             {
-                throw new ArgumentException("The brand name is either longer than 20 or less than 2 characters long"
+                throw new ArgumentException("The brand name is either longer than 20 or less than 2 characters long."
                     , nameof(value));
             }
             brand = value;
         }
     }
 
-    public double Weight    //Positive value
+    public double Weight    //Make sure vehicle doesn't weigh 0 kg or less.
     {
         get { return weight; }
         set
         {
-            if (value <= 4.0)
+            if (value <= 0)
             {
                 throw new ArgumentException("Weight can not be less than 4kg"
                     , nameof(value));
@@ -49,11 +49,12 @@ abstract class Vehicle
         }
     }
 
-    public int Year         //1886-current year
+    public int Year         
     {
         get { return year; }
         set
-        {
+        {   
+            //Checking if value is less than 1886 and greater than the year it currently is.
             if (value < 1886 || value > DateTime.Now.Year)
             {
                 throw new ArgumentException("1886 is too early and vehicles can't be from the future!"
@@ -63,14 +64,14 @@ abstract class Vehicle
         }
     }
 
-    public string Model     //2-20 tecken
+    public string Model     //Making sure model length is longer than 2 and shorter than 20.
     {
         get { return model; }
         set
         {
             if (value.Length < 2 || value.Length > 20)
             {
-                throw new ArgumentException("The model name is either longer than 20 or less than 2 characters long"
+                throw new ArgumentException("The model name is either longer than 20 or less than 2 characters long."
                     , nameof(value));
             }
             model = value;

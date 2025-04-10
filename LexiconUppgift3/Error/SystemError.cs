@@ -9,6 +9,8 @@ namespace LexiconUppgift3.ErrorFolder
     abstract class SystemError
     {
         abstract public string ErrorMessage();
+        
+        //Method that creates objects of all the error classes and then puts them in a List<SystemError> and prints them.
         public static void PrintAllErrors()
         {
             EngineFailureError engineFailureError = new EngineFailureError();

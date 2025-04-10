@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LexiconUppgift3.ErrorFolder
+namespace LexiconUppgift3.ErrorFolder;
+
+class EngineFailureError : SystemError
 {
-    class EngineFailureError : SystemError
+    public override string ErrorMessage()
     {
-        public override string ErrorMessage()
-        {
-            return "Engine error: Control engine status.";
-        }
+        return "Engine error: Control engine status.";
     }
 }

@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LexiconUppgift3.ErrorFolder
+namespace LexiconUppgift3.ErrorFolder;
+
+class TransmissionFailureError : SystemError
 {
-    class TransmissionFailureError : SystemError
+    public override string ErrorMessage()
     {
-        public override string ErrorMessage()
-        {
-            return "Transmission error: Control transmission status.";
-        }
+        return "Transmission error: Control transmission status.";
     }
 }
