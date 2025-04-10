@@ -46,16 +46,16 @@ namespace LexiconUppgift3.Vehicles
         {
             PrintList(vehicleList);
             Console.Write("Write number of vehicle: ");
-            int carChoice = int.Parse(Console.ReadLine());
+            int vehicleChoice = int.Parse(Console.ReadLine());
             
-            Vehicle vehicle = vehicleList[carChoice - 1];
+            Vehicle vehicle = vehicleList[vehicleChoice - 1];
             Console.Clear();
             vehicle.Stats();
             
             string vehicleType = vehicle.GetType().Name;
 
             Console.WriteLine("Just hit enter if you do not wish to edit field.");
-            vehicle = AssignVehicleProperties(vehicleType, vehicle);
+            vehicleList[vehicleChoice - 1] = AssignVehicleProperties(vehicleType, vehicle);
         }
 
         public static Vehicle CreateVehicle()
@@ -63,27 +63,25 @@ namespace LexiconUppgift3.Vehicles
             string vehicleType = AskForVehicleType();
             Vehicle vehicle = null;
 
-            AssignVehicleProperties(vehicleType, vehicle);
-
-            return vehicle;
+            return AssignVehicleProperties(vehicleType, vehicle);
         }
 
-        private static Vehicle AssignVehicleProperties(string vehicleType,Vehicle vehicle)
+        private static Vehicle AssignVehicleProperties(string vehicleType, Vehicle vehicle)
         {
             Console.Write("Write brand name: ");
             string brand = Console.ReadLine();
             Console.Write("Write model name: ");
             string model = Console.ReadLine();
-            
+
             Console.Write("Write year: ");
             string yearString = Console.ReadLine();
-            bool yearExists = int.TryParse(yearString,out int year);
-            
+            bool yearExists = int.TryParse(yearString, out int year);
+
             Console.Write("Write weight: ");
             string weightString = Console.ReadLine();
             bool weightExists = double.TryParse(weightString, out double weight);
-            
-            if(vehicle != null)
+
+            if (vehicle != null)
             {
                 if (brand == "")
                     brand = vehicle.Brand;
@@ -92,7 +90,7 @@ namespace LexiconUppgift3.Vehicles
                 if (yearString == "")
                     year = vehicle.Year;
                 if (weightString == "")
-                    weight = vehicle.Weight;               
+                    weight = vehicle.Weight;
             }
 
             string answer;
@@ -102,57 +100,55 @@ namespace LexiconUppgift3.Vehicles
                 case "Car":
                     Console.WriteLine("Spare tire(Y/N): ");
                     answer = Console.ReadLine().ToUpper();
-                    
+
                     if (answer == "Y")
                         vehicle = new Car(brand, model, year, weight, true);
                     else if (answer == "N")
                         vehicle = new Car(brand, model, year, weight, false);
-                    else if (answer == "" && vehicle.GetType().Name == "Car")
+                    else if (answer == "" && vehicle != null)
                     {
                         vehicle = new Car(brand, model, year, weight, (vehicle as Car).SpareTire);
                     }
 
-                        break;
+                    break;
                 case "ElectricScooter":
                     Console.WriteLine("Write number of Watts: ");
-                    answer = Console.ReadLine().ToUpper();
-                    vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
-                    
-                    if (answer == "" && vehicle.GetType().Name == "ElectricScooter")
-                    {
+                    answer = Console.ReadLine();
+
+                    if (answer == "" && vehicle != null)
                         vehicle = new ElectricScooter(brand, model, year, weight, (vehicle as ElectricScooter).Watt);
-                    }
+                    else
+                        vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
 
                     break;
                 case "Motorcycle":
                     Console.WriteLine("Write number of wheelies: ");
-                    answer = Console.ReadLine().ToUpper();
-                    vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
-                    
-                    if (answer == "" && vehicle.GetType().Name == "Motorcycle")
-                    {
+                    answer = Console.ReadLine();
+
+                    if (answer == "" && vehicle != null)
                         vehicle = new Motorcycle(brand, model, year, weight, (vehicle as Motorcycle).WheelieCount);
-                    }
+                    else
+                        vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
 
                     break;
                 case "Truck":
                     Console.WriteLine("Write number of wheels: ");
-                    answer = Console.ReadLine().ToUpper();
-                    vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
+                    answer = Console.ReadLine();
 
-                    if (answer == "" && vehicle.GetType().Name == "Truck")
-                    {
+                    if (answer == "" && vehicle != null)
                         vehicle = new Truck(brand, model, year, weight, (vehicle as Truck).NumberOfWheels);
-                    }
+                    else
+                        vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
 
                     break;
-
                 default:
-                    throw new ArgumentException("No vehicle with that type exists");
-
-                
+                    throw new NullReferenceException("Something went wrong while creating your vehicle, please try again.");
             }
-            return vehicle;
+
+            if (vehicle != null)
+                return vehicle;
+            else
+                throw new ArgumentException("The input you gave is not valid");
         }
 
         private static string AskForVehicleType()
