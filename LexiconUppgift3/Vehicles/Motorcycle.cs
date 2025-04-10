@@ -31,7 +31,7 @@ namespace LexiconUppgift3.Vehicles
 
         public override void StartEngine()
         {
-            Console.WriteLine("EHEHEHEHEHEHE Blublublublublublublublublu...");
+            Console.WriteLine($"{Environment.NewLine}Starting motor: EHEHEHEHEHEHE Blublublublublublublublublu...");
         }
 
         public override void Stats()

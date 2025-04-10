@@ -25,12 +25,12 @@ namespace LexiconUppgift3.Vehicles
 
         public override void StartEngine()
         {
-            Console.WriteLine("UHUHUHU brum brum brum");
+            Console.WriteLine($"{Environment.NewLine}Starting motor: UHUHUHU brum brum brum");
         }
 
         public void Clean()
         {
-            Console.WriteLine($"Cleaning car.");
+            Console.WriteLine($"{Environment.NewLine}Cleaning car.");
         }
 
         public override void Stats()

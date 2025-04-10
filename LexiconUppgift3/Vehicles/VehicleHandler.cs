@@ -19,6 +19,7 @@ namespace LexiconUppgift3.Vehicles
                     Console.WriteLine($"Vehicle #{i}");
                     vehicle.Stats();
                     i++;
+                    Console.WriteLine("-------------------");
                 }
             }
             else
@@ -54,7 +55,7 @@ namespace LexiconUppgift3.Vehicles
             
             string vehicleType = vehicle.GetType().Name;
 
-            Console.WriteLine("Just hit enter if you do not wish to edit field.");
+            Console.WriteLine(Environment.NewLine + "Just hit enter if you do not wish to edit field.");
             vehicleList[vehicleChoice - 1] = AssignVehicleProperties(vehicleType, vehicle);
         }
 

@@ -31,8 +31,9 @@ namespace LexiconUppgift3.Vehicles
 
         public override void StartEngine()
         {
-            Console.WriteLine("*Cricket noises* Wait a second... Electric vehicles don't have engines, they have motors." + Environment.NewLine +
-            "Starting motor instead.");
+            Console.Write($"{Environment.NewLine}Starting motor: *Cricket noises* Wait a second... " +
+                $"Electric vehicles don't have engines, they have motors. {Environment.NewLine}" +
+                $"Starting motor instead: ");
             StartMotor();
         }
         private static void StartMotor() 

@@ -18,6 +18,7 @@ internal class Program
        
         while (true) 
         {
+            //Removes the color from the exception messages.
             Console.ResetColor();
             Console.WriteLine(
                 $"1. Create vehicle{Environment.NewLine}" +
