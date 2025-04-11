@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static LexiconUppgift3.Utility;
 
 namespace LexiconUppgift3.Vehicles;
 
@@ -84,20 +85,15 @@ static class VehicleHandler
     private static Vehicle AssignVehicleProperties(string vehicleType, Vehicle vehicle)
     {
         //Taking the info from the user.
-        Console.Write("Write brand name: ");
-        string brand = Console.ReadLine();
-        Console.Write("Write model name: ");
-        string model = Console.ReadLine();
+        string brand = InputString("Write brand name: ");
+        string model = InputString("Write model name: ");
         //Ended up creating a string first so that I could check if the value "" is given.
         //I tried with just a TryParse but it couldn't differentiate between "" and for example "rgrdawd".
-        Console.Write("Write year: ");
-        string yearString = Console.ReadLine();
+        string yearString = InputString("Write year: ");
         bool yearExists = int.TryParse(yearString, out int year);
 
-        Console.Write("Write weight(kg): ");
-        string weightString = Console.ReadLine();
+        string weightString = InputString("Write weight(kg): ");
         bool weightExists = double.TryParse(weightString, out double weight);
-
         //The vehicle is null at this point when creating a vehicle. So this code will only run when editing.
         //Giving "" as a value makes the property not update.
         if (vehicle != null)
@@ -116,64 +112,73 @@ static class VehicleHandler
 
         //Different ways of creating different types because of the unique values.
         //I'm sure there's a smoother way of doing this but I started running out of time so I just tried to make it work.
-        switch (vehicleType)
+        try
         {
-            case "Car":
-                Console.Write("Spare tire(Y/N): ");
-                answer = Console.ReadLine().ToUpper();
+            switch (vehicleType)
+            {
+                case "Car":
+                    answer = InputString("Spare tire(Y/N): ").ToUpper();
 
-                //Checks if the user wanted a spare tire or not.
-                if (answer == "Y")
-                    vehicle = new Car(brand, model, year, weight, true);
-                else if (answer == "N")
-                    vehicle = new Car(brand, model, year, weight, false);
-                //If the answer is "" and vehicle isn't null(Only when editing) the spareTire doesn't get edited. 
-                else if (answer == "" && vehicle != null)
-                    vehicle = new Car(brand, model, year, weight, (vehicle as Car).SpareTire);
-                else
-                    //Could't create a vehicle and get an exception on the bool spareTire because of compile errors.
-                    //Made this run instead on input that's not valid.
-                    throw new ArgumentException("Spare tire value must be either Y or N");
+                    //Checks if the user wanted a spare tire or not.
+                    if (answer == "Y")
+                        vehicle = new Car(brand, model, year, weight, true);
+                    else if (answer == "N")
+                        vehicle = new Car(brand, model, year, weight, false);
+                    //If the answer is "" and vehicle isn't null(Only when editing) the spareTire doesn't get edited. 
+                    else if (answer == "" && vehicle != null)
+                        vehicle = new Car(brand, model, year, weight, (vehicle as Car).SpareTire);
+                    else
+                        //Could't create a vehicle and get an exception on the bool spareTire because of compile errors.
+                        //Made this run instead on input that's not valid.
+                        throw new ArgumentException("Spare tire value must be either Y or N");
 
-                break;
-            case "ElectricScooter":
-                Console.Write("Write number of Watts: ");
-                answer = Console.ReadLine();
+                    break;
+                case "ElectricScooter":
+                    answer = InputString("Write number of Watts: "); 
 
-                if (answer == "" && vehicle != null)
-                    vehicle = new ElectricScooter(brand, model, year, weight, (vehicle as ElectricScooter).Watt);
-                else
-                    vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
+                    if (answer == "" && vehicle != null)
+                        vehicle = new ElectricScooter(brand, model, year, weight, (vehicle as ElectricScooter).Watt);
+                    else
+                        vehicle = new ElectricScooter(brand, model, year, weight, int.Parse(answer));
 
-                break;
-            case "Motorcycle":
-                Console.Write("Write number of wheelies: ");
-                answer = Console.ReadLine();
+                    break;
+                case "Motorcycle":
+                    answer = InputString("Write number of wheelies: ");
 
-                if (answer == "" && vehicle != null)
-                    vehicle = new Motorcycle(brand, model, year, weight, (vehicle as Motorcycle).WheelieCount);
-                else
-                    vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
+                    if (answer == "" && vehicle != null)
+                        vehicle = new Motorcycle(brand, model, year, weight, (vehicle as Motorcycle).WheelieCount);
+                    else
+                        vehicle = new Motorcycle(brand, model, year, weight, int.Parse(answer));
 
-                break;
-            case "Truck":
-                Console.Write("Write number of wheels: ");
-                answer = Console.ReadLine();
+                    break;
+                case "Truck":
 
-                if (answer == "" && vehicle != null)
-                    vehicle = new Truck(brand, model, year, weight, (vehicle as Truck).NumberOfWheels);
-                else
-                    vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
+                    answer = InputString("Write number of wheels: ");
 
-                break;
-            default:
-                //Can't really see this triggering but feels wierd not having a default case.
-                throw new NullReferenceException("Something went wrong while creating your vehicle, please try again.");
+                    if (answer == "" && vehicle != null)
+                        vehicle = new Truck(brand, model, year, weight, (vehicle as Truck).NumberOfWheels);
+                    else
+                        vehicle = new Truck(brand, model, year, weight, int.Parse(answer));
+
+                    break;
+            }
+        }
+        catch (Exception e)
+        {   //This will trigger if the int parse fails.
+            throw new ArgumentException(
+               vehicleType switch
+            {
+                "ElectricScooter" => "Watts have to be a an integer.",
+                "Motorcycle" => "Wheelies have to be an integer.",
+                "Truck" => "Wheels have to be an integer."
+            } 
+            );
         }
         //Returns the vehicle to Change/Create method.  
         return vehicle;
     }
-    
+
+
     //Asks user for the vehicle type and returns it in a string.
     private static string AskForVehicleType()
     {
